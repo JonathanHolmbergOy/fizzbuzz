@@ -80,7 +80,7 @@ class FizzBuzz {
 const fb_most_basic = () => {
     const arr = [];
     let index = 1;
-    for (i = index; i <= FB_LENGTH; i++) {
+    for (let i = index; i <= FB_LENGTH; i++) {
         if (i % 15 === 0) { arr.push('Fizzbuzz'); }
         else if (i % 5 === 0) { arr.push('Buzz'); }
         else if (i % 3 === 0) { arr.push('Fizz'); }
@@ -90,7 +90,7 @@ const fb_most_basic = () => {
 }
 // PROS: Simple, readable, fast execution, familiar pattern
 // CONS: Hardcoded rules, not flexible, repetitive conditions  
-// SIDE EFFECTS: Uses global variable 'i', potential for variable pollution
+// SIDE EFFECTS: None, properly scoped variables
 
 // fb_most_basic()
 
@@ -146,14 +146,14 @@ const fb_while_loop = () => {
     const arr = [];
     let index = 1;
     while (index <= FB_LENGTH) {
-        arr.push(findRule(i));
+        arr.push(findRule(index));
         index++;
     }
     return arr;
 }
 // PROS: Explicit control over iteration, useful for complex loop conditions
 // CONS: Error-prone index management, more verbose than for loops
-// SIDE EFFECTS: BUG - uses undefined variable 'i' instead of 'index', will cause errors
+// SIDE EFFECTS: None, properly uses index variable
 
 // fb_while_loop()
 
@@ -202,11 +202,11 @@ const fb_array_map_method = () => {
  */
 
 const fb_array_reduce_method = () => {
-    Array.from({ length: FB_LENGTH }, (_, i) => i + 1).reduce((acc, i) => { return [...acc, findRule(i)]; }, []);
+    return Array.from({ length: FB_LENGTH }, (_, i) => i + 1).reduce((acc, i) => { return [...acc, findRule(i)]; }, []);
 };
 // PROS: Functional accumulator pattern, single pass iteration
-// CONS: Spread operator creates new arrays each iteration (O(n²)), BUG - missing return
-// SIDE EFFECTS: BUG - function returns undefined, not the array result
+// CONS: Spread operator creates new arrays each iteration (O(n²) complexity)
+// SIDE EFFECTS: None, properly returns the accumulated array
 
 // fb_array_reduce_method()
 
