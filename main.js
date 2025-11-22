@@ -317,3 +317,78 @@ const fb_class = () => {
 };
 
 // fb_class()
+
+
+
+/**
+ * FizzBuzz implementations using trigonometric cosine functions
+ * 
+ * These implementations use finite Fourier series with cosine terms to compute
+ * an index function that produces values 0, 1, 2, or 3, which are used to select
+ * the output from [n, 'Fizz', 'Buzz', 'Fizzbuzz']. This approach uses only cosines,
+ * addition, multiplication, and division - no modulo operations required!
+ * 
+ * NOTE: I am not good at math - these implementations are based entirely on the
+ * excellent mathematical work by Susam Pal. All credit goes to him for deriving
+ * this trigonometric approach to FizzBuzz.
+ * 
+ * Source: "Solving Fizz Buzz with Cosines" by Susam Pal
+ * https://susam.net/fizz-buzz-with-cosines.html
+ */
+
+/**
+ * FizzBuzz using separate indicator functions
+ * @returns {Array} Array of FizzBuzz values from 1 to FB_LENGTH
+ * @variant Uses separate indicator functions I₃(n) and I₅(n) computed via cosines
+ * 
+ * This implementation computes indicator functions separately:
+ * - I₃(n) = 1/3 + (2/3)cos(2πn/3) - indicates if n is divisible by 3
+ * - I₅(n) = 1/5 + (2/5)cos(2πn/5) + (2/5)cos(4πn/5) - indicates if n is divisible by 5
+ * Then combines them: f(n) = I₃(n) + 2I₅(n) to get index 0, 1, 2, or 3
+ */
+
+const fb_cosine_indicator_method = () => {
+    return Array.from({ length: FB_LENGTH }, (_, i) => {
+        const n = i + 1;
+        // Compute indicator functions separately
+        const I3 = 1/3 + (2/3) * Math.cos(2 * Math.PI * n / 3);
+        const I5 = 1/5 + (2/5) * Math.cos(2 * Math.PI * n / 5) + (2/5) * Math.cos(4 * Math.PI * n / 5);
+        // Combine to get index: f(n) = I₃(n) + 2I₅(n)
+        const index = Math.round(I3 + 2 * I5);
+        return [n, 'Fizz', 'Buzz', 'Fizzbuzz'][index];
+    });
+}
+// PROS: Shows step-by-step indicator function approach, mathematically elegant, no modulo operations
+// CONS: Overly complex for this problem, floating-point precision concerns, harder to understand
+// SIDE EFFECTS: None, pure functional approach with trigonometric computations
+
+// fb_cosine_indicator_method()
+
+
+
+/**
+ * FizzBuzz using simplified combined formula
+ * @returns {Array} Array of FizzBuzz values from 1 to FB_LENGTH
+ * @variant Uses single closed-form expression combining all cosine terms
+ * 
+ * This implementation uses the algebraically simplified formula:
+ * f(n) = 11/15 + (2/3)cos(2πn/3) + (4/5)[cos(2πn/5) + cos(4πn/5)]
+ * This is equivalent to the indicator function approach but in a single expression.
+ */
+
+const fb_cosine_method = () => {
+    return Array.from({ length: FB_LENGTH }, (_, i) => {
+        const n = i + 1;
+        const index = Math.round(
+            11/15 + 
+            (2/3) * Math.cos(2 * Math.PI * n / 3) + 
+            (4/5) * (Math.cos(2 * Math.PI * n / 5) + Math.cos(4 * Math.PI * n / 5))
+        );
+        return [n, 'Fizz', 'Buzz', 'Fizzbuzz'][index];
+    });
+}
+// PROS: Mathematically elegant, no modulo operations, demonstrates Fourier series application, more concise
+// CONS: Overly complex for this problem, floating-point precision concerns, harder to understand
+// SIDE EFFECTS: None, pure functional approach with trigonometric computations
+
+// fb_cosine_method()
