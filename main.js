@@ -329,12 +329,11 @@ const fb_class = () => {
  * addition, multiplication, and division - no modulo operations required!
  * 
  * NOTE: I am not good at math - these implementations are based entirely on the
- * excellent mathematical work by Susam Pal. All credit goes to him for deriving
- * this trigonometric approach to FizzBuzz.
+ * excellent mathematical work by Susam Pal.
  * 
- * Source: "Solving Fizz Buzz with Cosines" by Susam Pal
- * https://susam.net/fizz-buzz-with-cosines.html
- */
+ * Sources:
+ * - "Solving Fizz Buzz with Cosines" by Susam Pal
+ *   https://susam.net/fizz-buzz-with-cosines.html
 
 /**
  * FizzBuzz using separate indicator functions
@@ -392,3 +391,43 @@ const fb_cosine_method = () => {
 // SIDE EFFECTS: None, pure functional approach with trigonometric computations
 
 // fb_cosine_method()
+
+
+
+/**
+ * FizzBuzz using Ramanujan sums
+ * @returns {Array} Array of FizzBuzz values from 1 to FB_LENGTH
+ * @variant Uses Ramanujan sums c₃(n) and c₅(n) to express the index function
+ * 
+ * This implementation uses Ramanujan sums, which are number-theoretic functions
+ * defined by Srinivasa Ramanujan. The trigonometric forms are:
+ * - c₃(n) = 2cos(2πn/3)
+ * - c₅(n) = 2cos(2πn/5) + 2cos(4πn/5)
+ * 
+ * The indicator functions can be expressed in terms of Ramanujan sums:
+ * - I₃(n) = 1/3 + (1/3)c₃(n)
+ * - I₅(n) = 1/5 + (1/5)c₅(n)
+ * 
+ * Therefore: f(n) = 11/15 + (1/3)c₃(n) + (2/5)c₅(n)
+ * This is mathematically equivalent to the cosine approaches but explicitly
+ * uses the Ramanujan sum formulation, connecting FizzBuzz to number theory.
+ * - "Ramanujan's sum" - Wikipedia
+ *   https://en.wikipedia.org/wiki/Ramanujan%27s_sum
+ */
+
+const fb_ramanujan_method = () => {
+    return Array.from({ length: FB_LENGTH }, (_, i) => {
+        const n = i + 1;
+        // Compute Ramanujan sums
+        const c3 = 2 * Math.cos(2 * Math.PI * n / 3);
+        const c5 = 2 * Math.cos(2 * Math.PI * n / 5) + 2 * Math.cos(4 * Math.PI * n / 5);
+        // Use Ramanujan sums in the index function: f(n) = 11/15 + (1/3)c₃(n) + (2/5)c₅(n)
+        const index = Math.round(11/15 + (1/3) * c3 + (2/5) * c5);
+        return [n, 'Fizz', 'Buzz', 'Fizzbuzz'][index];
+    });
+}
+// PROS: Connects FizzBuzz to number theory, uses Ramanujan sums explicitly, mathematically elegant
+// CONS: Overly complex for this problem, floating-point precision concerns, harder to understand
+// SIDE EFFECTS: None, pure functional approach with trigonometric computations
+
+// fb_ramanujan_method()
