@@ -152,3 +152,16 @@ const fizzBuzzReduceArray = () => {
 const fizzBuzzClosureArray = (() => {
     return () => Array.from({ length: FB_LENGTH }, (_, i) => findRuleWithFind(i + 1));
 })();
+
+/**
+ * @param {number} i - Current iteration index (default: 1)
+ * @param {number} max - Maximum value to process (default: FB_LENGTH)
+ * @param {Array} arr - Accumulator array for results (default: [])
+ * @returns {Array} Array of FizzBuzz values from 1 to max
+ * @variant Uses recursive pattern with accumulator for functional programming approach
+ */
+const fizzBuzzRecursive = (i = 1, max = FB_LENGTH, array = []) => {
+    if (i > max) return array;
+    array.push(findRuleWithConcat(i));
+    return fizzBuzzRecursive(i + 1, max, array);
+}
