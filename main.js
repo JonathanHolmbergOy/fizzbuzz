@@ -25,7 +25,7 @@ const FB_RULES = [
 //Helper functions to get the correct output
 /**
  * 
- * @param { number } number - Number to evaluate against Fizzbuzz rules
+ * @param { number } number - Number to evaluate against FizzBuzz rules
  * @returns { string } - Matching rule label or the number converted into a string
  * @variant Array.find() method
  */
@@ -39,7 +39,7 @@ const findRuleWithFind = (number) => {
 
 /**
  * 
- * @param { number } number - Number to evaluate against Fizzbuzz rules
+ * @param { number } number - Number to evaluate against FizzBuzz rules
  * @returns { string } - Matching rule label(s) or the number converted into a string 
  * @variant String concatenation
  */
@@ -57,20 +57,20 @@ const findRuleWithConcat = (number) => {
 
 /**
  * 
- * @param {*} number - Number to evaluate against Fizzbuzz rules
+ * @param {*} number - Number to evaluate against FizzBuzz rules
  * @returns { string } - Matching rule label or the number converted into a string
  * @variant Switch statement
  */
 const findRuleWithSwitch = (number) => {
     switch (true) {
         case number === 0: return;
-        case number % 15 === 0: return 'Fizzbuzz';
+        case number % 15 === 0: return 'FizzBuzz';
         case number % 5 === 0: return 'Buzz';
         case number % 3 === 0: return 'Fizz';
         default: return number.toString();
     }
 }
-// PROS: Fastest performance with direct conditionals (switch statements jump memory adresses), explicit and clear, conventional pattern,
+// PROS: Fastest performance with direct conditionals (switch statements jump memory addresses), explicit and clear, conventional pattern,
 // CONS: Hardcoded values (not extensible), order dependent, repetitive for more rules, switch(true) considered anti-pattern by some, not DRY
 
 
@@ -146,7 +146,7 @@ const fizzBuzzReduceArray = () => {
 
 /**
  * 
- * @returns { array } - Return an array of strings
+ * @returns { array } - Returns an array of strings
  * @variant Closure with Array.from()
  */
 const fizzBuzzClosureArray = (() => {
