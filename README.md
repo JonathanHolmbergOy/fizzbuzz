@@ -18,6 +18,13 @@ Multiple approaches to iterating through the FizzBuzz problem:
 
 ## Generators
 
+ES6 generator implementations demonstrating lazy evaluation and the iterator protocol:
+
+- **fizzBuzzGenerator** - Generator function that yields individual FizzBuzz values on demand, enabling memory-efficient iteration and controlled evaluation flow
+- **fizzBuzzGeneratorLoop** - Consumer pattern that uses a generator with iterative consumption to build the complete array
+
+Generators provide lazy evaluation where values are computed only when requested via `next()`, making them useful for large datasets or infinite sequences. Note: In this showcase, `fizzBuzzGeneratorLoop` eagerly consumes all values, which defeats the memory efficiency benefit—but demonstrates the consumption pattern.
+
 ## Math stuff
 
 Mathematically elegant (but overly complex) solutions using trigonometric functions:
@@ -26,4 +33,4 @@ Mathematically elegant (but overly complex) solutions using trigonometric functi
 - **Cosine Indicator Functions** - Computes separate indicator functions I₃(n) and I₅(n) for divisibility checks
 - **Ramanujan Sums** - Uses Ramanujan sum formulation connecting FizzBuzz to number theory: `f(n) = 11/15 + (1/3)c₃(n) + (2/5)c₅(n)`
 
-These implementations require no modulo operations and demonstrate applications of Fourier series and number theory. Based on the excellent work by [Susam Pal](https://susam.net/fizz-buzz-with-cosines.html).
+These finite Fourier series implementations require no modulo operations and demonstrate applications of number theory. Based on the excellent work by [Susam Pal](https://susam.net/fizz-buzz-with-cosines.html).
