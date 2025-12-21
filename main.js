@@ -75,6 +75,97 @@ const findRuleWithSwitch = (number) => {
 
 
 
+/**
+ * FizzBuzz implementations using trigonometric cosine functions
+ * 
+ * These implementations use finite Fourier series with cosine terms to compute
+ * an index function that produces values 0, 1, 2, or 3, which are used to select
+ * the output from [n, 'Fizz', 'Buzz', 'Fizzbuzz']. This approach uses only cosines,
+ * addition, multiplication, and division - no modulo operations required!
+ * 
+ * This implementation uses the algebraically simplified formula:
+ * f(n) = 11/15 + (2/3)cos(2πn/3) + (4/5)[cos(2πn/5) + cos(4πn/5)]
+ * This is equivalent to the indicator function approach but in a single expression.
+ * 
+ * NOTE: I am not good at math - these implementations are based entirely on the
+ * excellent mathematical work by Susam Pal.
+ * 
+ * Source:
+ * - "Solving Fizz Buzz with Cosines" by Susam Pal
+ *   https://susam.net/fizz-buzz-with-cosines.html
+ */
+
+/**
+ * 
+ * @param { number } number - Number to evaluate against FizzBuzz rules 
+ * @returns { string } - Matching rule label or number converted into a string
+ */
+const findRuleWithCosine = (number) => {
+    const results = [number.toString(), 'Fizz', 'Buzz', 'FizzBuzz']
+    const index = Math.round(11/15 + (2/3) * Math.cos(2 * Math.PI * number / 3) + (4/5) * (Math.cos(2 * Math.PI * number / 5) + Math.cos(4 * Math.PI * number / 5)))
+    return results[index];
+}
+// PROS: Mathematically elegant, no modulo operations, demonstrates Fourier series application, more concise
+// CONS: Overly complex for this problem, floating-point precision concerns, harder to understand
+
+
+
+
+/**
+ * This implementation computes indicator functions separately:
+ * - I₃(n) = 1/3 + (2/3)cos(2πn/3) - indicates if n is divisible by 3
+ * - I₅(n) = 1/5 + (2/5)cos(2πn/5) + (2/5)cos(4πn/5) - indicates if n is divisible by 5
+ * Then combines them: f(n) = I₃(n) + 2I₅(n) to get index 0, 1, 2, or 3
+ * Source:
+ * - "Solving Fizz Buzz with Cosines" by Susam Pal
+ *   https://susam.net/fizz-buzz-with-cosines.html
+ */
+/**
+ * 
+ * @param { number } number - Number to evaluate against FizzBuzz rules
+ * @returns { string } - Matching rule label or the number converted into a string
+ */
+const findRuleWithCosineIndicator = (number) => {
+    const results = [number.toString(), 'Fizz', 'Buzz', 'Fizzbuzz']
+    const I3 = 1/3 + (2/3) * Math.cos(2 * Math.PI * number / 3);
+    const I5 = 1/5 + (2/5) * Math.cos(2 * Math.PI * number / 5) + (2/5) * Math.cos(4 * Math.PI * number / 5);
+    const index = Math.round(I3 + 2 * I5);
+    return results[index];
+}
+// PROS: Shows step-by-step indicator function approach, mathematically elegant, no modulo operations
+// CONS: Overly complex for this problem, floating-point precision concerns, harder to understand
+
+
+
+
+/**
+ * After finding Susams blog-post, I wondered if the same cosine formulation could be applied
+ * with Ramanujan sums (defined by Srinivasa Ramanujan and found by me after a Wikipedia deep dive) as well.
+ * The trigonometric forms are:
+ * - c₃(n) = 2cos(2πn/3)
+ * - c₅(n) = 2cos(2πn/5) + 2cos(4πn/5)
+ * 
+ * The indicator functions can be expressed in terms of Ramanujan sums:
+ * - I₃(n) = 1/3 + (1/3)c₃(n)
+ * - I₅(n) = 1/5 + (1/5)c₅(n)
+ * 
+ * Therefore: f(n) = 11/15 + (1/3)c₃(n) + (2/5)c₅(n)
+ * This is mathematically equivalent to the cosine approaches but explicitly
+ * uses the Ramanujan sum formulation, connecting FizzBuzz to number theory.
+ * Source: "Ramanujan's sum" - Wikipedia
+ *   https://en.wikipedia.org/wiki/Ramanujan%27s_sum
+ */
+
+const findRuleWithRamanujanSums = (number) => {
+    const results = [number.toString(), 'Fizz', 'Buzz', 'Fizzbuzz'];
+    const c3 = 2 * Math.cos(2 * Math.PI * number / 3);
+    const c5 = 2 * Math.cos(2 * Math.PI * number / 5) + 2 * Math.cos(4 * Math.PI * number / 5);
+    const index = Math.round(11/15 + (1/3) * c3 + (2/5) * c5);
+    return results[index];
+}
+
+
+
 
 //Implementations to actually solve the problem
 
@@ -86,7 +177,7 @@ const findRuleWithSwitch = (number) => {
 const fizzBuzzForLoop = () => {
     const array = [];
     for (let i = FB_INDEX; i <= FB_LENGTH; i++) { 
-        array.push(findRuleWithFind(i));
+        array.push(findRuleWithCosine(i));
     }
     return array;
 }
@@ -113,7 +204,7 @@ const fizzBuzzWhileLoop = () => {
  */
 const fizzBuzzForEachLoop = () => {
     const array = [];
-    Array.from({ length: FB_LENGTH }, (_, i) => i + 1).forEach(i => array.push(findRuleWithSwitch(i)));
+    Array.from({ length: FB_LENGTH }, (_, i) => i + 1).forEach(i => array.push(findRuleWithCosineIndicator(i)));
     return array;
 }
 
@@ -150,7 +241,7 @@ const fizzBuzzReduceArray = () => {
  * @variant Closure with Array.from()
  */
 const fizzBuzzClosureArray = (() => {
-    return () => Array.from({ length: FB_LENGTH }, (_, i) => findRuleWithFind(i + 1));
+    return () => Array.from({ length: FB_LENGTH }, (_, i) => findRuleWithRamanujanSums(i + 1));
 })();
 
 /**
@@ -162,7 +253,7 @@ const fizzBuzzClosureArray = (() => {
  */
 const fizzBuzzRecursive = (i = 1, max = FB_LENGTH, array = []) => {
     if (i > max) return array;
-    array.push(findRuleWithConcat(i));
+    array.push(findRuleWithCosineIndicator(i));
     return fizzBuzzRecursive(i + 1, max, array);
 }
 
