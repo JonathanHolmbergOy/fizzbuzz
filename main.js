@@ -276,3 +276,37 @@ class FizzBuzz {
         return this.get();
     } 
 }
+
+/** Solution implementing generators - these are a little useless in this example since we return the entire array in fizzBuzzGeneratorLoop instead 
+ * of yielding the individual value but I wanted to add them in to showcase the functionality. 
+ */ 
+
+/**
+ * FizzBuzz generator function for lazy evaluation and memory efficiency
+ * @param {number} max - Maximum value to generate (default: FB_LENGTH)
+ * @yields {string} Individual FizzBuzz values on demand
+ * @variant Uses ES6 generator pattern for lazy evaluation and iterator protocol
+ */
+
+const fizzBuzzGenerator = function* (max) {
+    for (let i = 1; i <= max; i++) { yield findRuleWithConcat(i); }
+}
+// SIDE EFFECTS: Creates generator object, maintains internal state between yields
+// USAGE:
+// const gen = fizzBuzzGenerator(FB_LENGTH);
+// gen.next()
+
+
+
+/**
+ * FizzBuzz implementation consuming generator with for...of loop
+ * @returns {Array} Array of FizzBuzz values from 1 to FB_LENGTH
+ * @variant Uses generator consumption pattern with for...of iteration for controlled evaluation
+ */
+
+const fizzBuzzGeneratorLoop = () => {
+    const array = [];
+    const gen = fizzBuzzGenerator(FB_LENGTH);
+    for (let i = FB_INDEX; i <= FB_LENGTH; i++) { array.push(gen.next())}
+    return array;
+}
