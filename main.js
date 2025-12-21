@@ -45,7 +45,7 @@ const findRuleWithFind = (number) => {
  */
 const findRuleWithConcat = (number) => {
     let string = '';
-    if (number === 0) { return; } //Required for the solutions where we can't set our index
+    if (number === 0) { return; } // Required for the solutions where we can't set our index
     if (number % 3 === 0) { string += 'Fizz' }
     if (number % 5 === 0) { string += 'Buzz' }
     return string ? string : number?.toString();
@@ -63,7 +63,7 @@ const findRuleWithConcat = (number) => {
  */
 const findRuleWithSwitch = (number) => {
     switch (true) {
-        case number === 0: return;
+        case number === 0: return; // Required for the solutions where we can't set our index
         case number % 15 === 0: return 'FizzBuzz';
         case number % 5 === 0: return 'Buzz';
         case number % 3 === 0: return 'Fizz';
