@@ -165,3 +165,23 @@ const fizzBuzzRecursive = (i = 1, max = FB_LENGTH, array = []) => {
     array.push(findRuleWithConcat(i));
     return fizzBuzzRecursive(i + 1, max, array);
 }
+
+/**
+ * @class - FizzBuzz class solution
+ * @example 
+ * new FizzBuzz(FB_LENGTH, FB_INDEX).exe()
+ */
+class FizzBuzz {
+    /**
+     * Create a new FizzBuzz instance
+     * @param { number } max - Maximum value to process
+     * @param { number } index - Starting index
+     */
+    constructor(max, index) { this.max = max; this.index = index; this.array = []; }
+    set(value) { this.array.push(value); }
+    get() { return this.array; }
+    exe() { 
+        for (let i = this.index; i <= this.max; i++) { this.set(findRuleWithSwitch(i)) }
+        return this.get();
+    } 
+}
