@@ -204,7 +204,7 @@ const fizzBuzzWhileLoop = () => {
  */
 const fizzBuzzForEachLoop = () => {
     const array = [];
-    Array.from({ length: FB_LENGTH }, (_, i) => i + 1).forEach(i => array.push(findRuleWithCosineIndicator(i)));
+    Array.from({ length: FB_LENGTH }, (_, i) => i + FB_INDEX).forEach(i => array.push(findRuleWithCosineIndicator(i)));
     return array;
 }
 
@@ -214,7 +214,7 @@ const fizzBuzzForEachLoop = () => {
  * @variant Array.from().map()
  */
 const fizzBuzzMapArray = () => {
-    return Array.from({ length: FB_LENGTH }, (_, i) => i + 1).map(i => { return findRuleWithFind(i); })
+    return Array.from({ length: FB_LENGTH }, (_, i) => i + FB_INDEX).map(i => { return findRuleWithFind(i); })
 }
 
 /**
@@ -223,7 +223,7 @@ const fizzBuzzMapArray = () => {
  * @variant Array.fill().map()
  */
 const fizzBuzzMapFillArray = () => {
-    return Array(FB_LENGTH).fill().map((_, i) => findRuleWithSwitch(i + 1));
+    return Array(FB_LENGTH).fill().map((_, i) => findRuleWithSwitch(i + FB_INDEX));
 }
 
 /**
@@ -232,7 +232,7 @@ const fizzBuzzMapFillArray = () => {
  * @variant Array.reduce()
  */
 const fizzBuzzReduceArray = () => {
-    return Array.from({ length: FB_LENGTH }, (_, i) => i + 1).reduce((acc, i) => { return [...acc, findRuleWithConcat(i)]; }, []);
+    return Array.from({ length: FB_LENGTH }, (_, i) => i + FB_INDEX).reduce((acc, i) => { return [...acc, findRuleWithConcat(i)]; }, []);
 };
 
 /**
@@ -241,7 +241,7 @@ const fizzBuzzReduceArray = () => {
  * @variant Closure with Array.from()
  */
 const fizzBuzzClosureArray = (() => {
-    return () => Array.from({ length: FB_LENGTH }, (_, i) => findRuleWithRamanujanSums(i + 1));
+    return () => Array.from({ length: FB_LENGTH }, (_, i) => findRuleWithRamanujanSums(i + FB_INDEX));
 })();
 
 /**
@@ -251,7 +251,7 @@ const fizzBuzzClosureArray = (() => {
  * @returns {Array} Array of FizzBuzz values from 1 to max
  * @variant Uses recursive pattern with accumulator for functional programming approach
  */
-const fizzBuzzRecursive = (i = 1, max = FB_LENGTH, array = []) => {
+const fizzBuzzRecursive = (i = FB_INDEX, max = FB_LENGTH, array = []) => {
     if (i > max) return array;
     array.push(findRuleWithCosineIndicator(i));
     return fizzBuzzRecursive(i + 1, max, array);
@@ -289,7 +289,7 @@ class FizzBuzz {
  */
 
 const fizzBuzzGenerator = function* (max) {
-    for (let i = 1; i <= max; i++) { yield findRuleWithConcat(i); }
+    for (let i = FB_INDEX; i <= max; i++) { yield findRuleWithConcat(i); }
 }
 // SIDE EFFECTS: Creates generator object, maintains internal state between yields
 // USAGE:
